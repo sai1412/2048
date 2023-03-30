@@ -33,7 +33,6 @@
             }
             .cell{
                   background-color: aqua;
-                  
             }
             .card{
                   height: 100%;
@@ -206,6 +205,68 @@
             
         }
 
+        function checkWin() {
+            for (let i = 0; i < rows; i++) {
+                for (let j = 0; j < cols; j++) {
+                if (container[i][j] === 2048) {
+                    return true;
+                }
+                }
+            }
+            return false;
+        }
+
+
+        // Variables to store touch position
+let startX = 0;
+let startY = 0;
+let endX = 0;
+let endY = 0;
+
+// Add touch event listeners to the element you want to detect swipes on
+const el = document.getElementById('container');
+
+el.addEventListener('touchstart', function(event) {
+  // Record the starting touch position
+  startX = event.touches[0].clientX;
+  startY = event.touches[0].clientY;
+});
+
+el.addEventListener('touchmove', function(event) {
+  // Prevent scrolling
+  event.preventDefault();
+});
+
+el.addEventListener('touchend', function(event) {
+  // Record the ending touch position
+  endX = event.changedTouches[0].clientX;
+  endY = event.changedTouches[0].clientY;
+
+  // Calculate the distance traveled in each direction
+  const deltaX = endX - startX;
+  const deltaY = endY - startY;
+
+  // Determine the direction of the swipe based on the distance traveled
+  if (Math.abs(deltaX) > Math.abs(deltaY)) {
+    if (deltaX > 0) {
+        move_right();
+        tile_two();
+    } else {
+        move_left();
+        tile_two();
+    }
+  } else {
+    if (deltaY > 0) {
+        move_down();
+        tile_two();
+    } else {
+        move_up();
+        tile_two();
+    }
+  }
+});
+
+
         // event listiners for keyup's
 
         document.addEventListener("keyup",(e)=>{
@@ -348,48 +409,6 @@
 
 
 
-        // function move_up(){
-        //     var k=1;
-        //     for(var i=0;i<cols;i++){
-        //         var row=[container[0][i],container[1][i],container[2][i],container[3][i]];
-        //         row=slide(row);
-        //         container[0][i]=row[0];
-        //         container[1][i]=row[1];
-        //         container[2][i]=row[2];
-        //         container[3][i]=row[3];
-        //         for(var j=0;j<rows;j++){
-                   
-        //             var val=container[i][j];
-        //             var div=document.getElementById(`${k}`).querySelector('div');
-        //             update_cell(div,val);
-        //             k++;
-
-        //         }
-        //     }
-        // }
-
-        // function move_down(){
-        //     var k=1;
-        //     for(var i=0;i<cols;i++){
-        //         var row=[container[0][i],container[1][i],container[2][i],container[3][i]];
-        //         row.reverse();
-        //         row=slide(row);
-        //         row.reverse();
-
-        //         // container[0][i]=row[0];
-        //         // container[1][i]=row[1];
-        //         // container[2][i]=row[2];
-        //         // container[3][i]=row[3];
-        //         for(var j=0;j<rows;j++){
-        //             container[i][j]=row[j];
-        //             var val=container[i][j];
-        //             var div=document.getElementById(`${k}`).querySelector('div');
-        //             update_cell(div,val);
-        //             k++;
-
-        //         }
-        //     }
-        // }
     
     </script>
 </html>
