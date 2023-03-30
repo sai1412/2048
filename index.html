@@ -224,7 +224,7 @@ let endX = 0;
 let endY = 0;
 
 // Add touch event listeners to the element you want to detect swipes on
-const el = document.getElementById('container');
+const el = document.body || document.getElementById('container');
 
 el.addEventListener('touchstart', function(event) {
   // Record the starting touch position
